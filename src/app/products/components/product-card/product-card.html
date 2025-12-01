@@ -1,14 +1,31 @@
-<div class="card bg-base-100 w-full shadow-sm animate-fadeIn">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes" />
+<div class="card card-sm shadow animate-fadeIn">
+  <figure class="hover-gallery">
+    @for(image of this.product().images;track image;let i=$index){
+      <img src="http://localhost:3000/api/files/product/{{ product().images.at(i)}}" />
+    }
   </figure>
   <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div class="card-actions justify-end">
-      <a [routerLink]="['/prodcut','t-shirt']" class="btn btn-info btn-outline">Más detalles</a>
+    <div class="badge badge-soft badge-secondary">{{ product().gender | titlecase }}</div>
+    <h2 class="card-title">{{ product().title }}</h2>
+    <!-- <p>{{ product().description | slice : 0 : 50 }}...</p> Lo agregaremos en ver detalles -->
+    <div class="font-black text-lg">{{ product().price | currency }}</div>
+    <p class="font-bold">Size</p>
+    <div class="flex gap-3 justify-start">
+      @for(size of product().sizes; track size){
+      <a class="btn btn-xs">{{ size }}</a>
+      }
+    </div>
+    <div class="flex w-full gap-2">
+      <a [routerLink]="['/product', product().slug]" class="flex-1 btn"> Más detalles</a>
+      <a [routerLink]="['/product', 't-shirt']" class="flex-1 btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M11 9V6H8V4h3V1h2v3h3v2h-3v3zM7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M1 4V2h3.275l4.25 9h7l3.9-7H21.7l-4.4 7.95q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.713-.975T5.25 14.05L6.6 11.6L3 4z"
+          />
+        </svg>
+        Agregar</a
+      >
     </div>
   </div>
 </div>

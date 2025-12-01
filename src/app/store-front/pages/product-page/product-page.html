@@ -1,0 +1,20 @@
+<div class="min-h-screen flex justify-center items-center">
+  <div class="flex justify-center card lg:card-side bg-base-100 shadow-sm w-[80%]">
+    <figure>
+      <div class="carousel carousel-vertical h-96">
+        @for(product of productResource.value()?.images;track product;let i=$index){
+          <div class="carousel-item h-full">
+            <img src="http://localhost:3000/api/files/product/{{ product}}" />
+          </div>
+        }
+      </div>
+    </figure>
+    <div class="card-body">
+      <h2 class="card-title">New album is released!</h2>
+      <p>Click the button to listen on Spotiwhy app.</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary">Listen</button>
+      </div>
+    </div>
+  </div>
+</div>
