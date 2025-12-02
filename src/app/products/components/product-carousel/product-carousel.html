@@ -1,0 +1,9 @@
+
+<swiper-container class="mySwiper" pagination="true" pagination-dynamic-bullets="true">
+  @for(image of images();track image){
+  <swiper-slide class="swiper-slide">
+    <img src="http://localhost:3000/api/files/product/{{ image }}" alt="" />
+  </swiper-slide>
+  }
+</swiper-container>
+

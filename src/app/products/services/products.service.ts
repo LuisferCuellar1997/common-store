@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { Product, ProductsResponse } from '../interfaces/product.interface';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
@@ -18,9 +18,11 @@ export class ProductsService {
 
   private http=inject(HttpClient)
 
-  getProducts(options:Options):Observable<ProductsResponse>{
+  allProducts=signal({})
 
-    const {limit=9,offset=0,gender=''}=options;
+
+  getProducts(options:Options):Observable<ProductsResponse>{
+    const {limit=52,offset=0,gender=''}=options;
     return this.http.get<ProductsResponse>(`${baseUrl}/products`,{
       params:{
         limit,
@@ -40,4 +42,5 @@ export class ProductsService {
       tap(resp=>console.log({resp}))
     );
   }
+
 }

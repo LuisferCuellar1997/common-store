@@ -1,20 +1,86 @@
-<div class="min-h-screen flex justify-center items-center">
-  <div class="flex justify-center card lg:card-side bg-base-100 shadow-sm w-[80%]">
-    <figure>
-      <div class="carousel carousel-vertical h-96">
-        @for(product of productResource.value()?.images;track product;let i=$index){
-          <div class="carousel-item h-full">
-            <img src="http://localhost:3000/api/files/product/{{ product}}" />
-          </div>
-        }
-      </div>
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title">New album is released!</h2>
-      <p>Click the button to listen on Spotiwhy app.</p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Listen</button>
-      </div>
-    </div>
-  </div>
+
+@if(productResource.isLoading()){
+<div class="flex justify-center items-center h-screen">
+  <span class="loading loading-spinner loading-lg"></span>
 </div>
+}@else{
+  @if(productResource.hasValue()){
+
+    <div class="py-16 flex justify-center items-center">
+
+      <div class="flex card lg:card-side bg-base-100 shadow-sm ">
+
+        <!-- 🟦 CONTENEDOR DEL CARRUSEL (VERTICAL + FLECHAS) -->
+        <div class="relative group flex items-center justify-center bg-white overflow-hidden">
+
+          <!-- Flecha arriba -->
+          <div
+            class="absolute top-3 left-1/2 -translate-x-1/2
+                   bg-black/40 text-white p-2 rounded-full
+                   opacity-0 group-hover:opacity-100
+                   transition duration-300 z-20 pointer-events-none">
+            ↑
+          </div>
+
+          <!-- Flecha abajo -->
+          <div
+            class="absolute bottom-3 left-1/2 -translate-x-1/2
+                   bg-black/40 text-white p-2 rounded-full
+                   opacity-0 group-hover:opacity-100
+                   transition duration-300 z-20 pointer-events-none">
+            ↓
+          </div>
+
+          <!-- Imagen cuadrada estilo Tesla -->
+          <figure class="m-0 w-[420px] h-[420px] flex items-center justify-center">
+            <div class="carousel carousel-vertical w-full h-full">
+
+              @for(product of productResource.value().images; track product){
+              <div class="carousel-item w-full h-full flex items-center justify-center">
+                <img
+                  loading="lazy"
+                  class="max-h-full max-w-full"
+                  src="http://localhost:3000/api/files/product/{{ product }}"
+                />
+              </div>
+              }
+
+            </div>
+          </figure>
+
+        </div>
+
+        <!-- 🟩 INFO DEL PRODUCTO -->
+        <div class="card-body max-w-prose">
+
+          <h2 class="card-title text-xl font-bold">
+            {{ productResource.value().title }}
+          </h2>
+
+          <p class="text-gray-700">
+            {{ productResource.value().description }}
+          </p>
+
+          <p class="font-bold mt-4">Tallas disponibles</p>
+
+          <div class="flex gap-3 mb-10 flex-wrap">
+            @for(size of productResource.value().sizes; track size){
+            <a class="btn btn-s rounded-lg border text-sm hover:bg-gray-100 transition">
+              {{ size }}
+            </a>
+            }
+          </div>
+
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Agregar al carro</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  }@else{
+    Este producto ya no está disponible
+  }
+}

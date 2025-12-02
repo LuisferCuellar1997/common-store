@@ -1,9 +1,5 @@
 <div class="card card-sm shadow animate-fadeIn">
-  <figure class="hover-gallery">
-    @for(image of this.product().images;track image;let i=$index){
-      <img src="http://localhost:3000/api/files/product/{{ product().images.at(i)}}" />
-    }
-  </figure>
+    <app-product-carousel [images]="product().images"/>
   <div class="card-body">
     <div class="badge badge-soft badge-secondary">{{ product().gender | titlecase }}</div>
     <h2 class="card-title">{{ product().title }}</h2>
